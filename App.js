@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, FlatList, Alert} from 'react-native';
-import {uuid} from 'uuidv4';
-
+import React, { useState } from 'react';
+import { Alert, FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { uuid } from 'uuidv4';
+import AddItem from './components/AddItem';
 import Header from './components/Header';
 import ListItem from './components/ListItem';
-import AddItem from './components/AddItem';
 
 const App = () => {
   const [items, setItems] = useState([
@@ -47,7 +46,7 @@ const App = () => {
   const saveEditItem = (id, text) => {
     setItems(prevItems => {
       return prevItems.map(item =>
-        item.id === editItemDetail.id ? {id, text: editItemDetail.text} : item,
+        item.id === editItemDetail.id ? { id, text: editItemDetail.text } : item
       );
     });
     // Flip edit status back to false
@@ -56,7 +55,7 @@ const App = () => {
 
   // Event handler to capture users text input as they edit an item
   const handleEditChange = text => {
-    editItemDetailChange({id: editItemDetail.id, text});
+    editItemDetailChange({ id: editItemDetail.id, text });
   };
 
   const addItem = text => {
@@ -70,11 +69,11 @@ const App = () => {
             style: 'cancel',
           },
         ],
-        {cancelable: true},
+        { cancelable: true }
       );
     } else {
       setItems(prevItems => {
-        return [{id: uuid(), text}, ...prevItems];
+        return [{ id: uuid(), text }, ...prevItems];
       });
     }
   };
@@ -97,37 +96,40 @@ const App = () => {
         })
       : // Add item to checked items state
         checkedItemChange(prevItems => {
-          return [...prevItems.filter(item => item.id !== id), {id, text}];
+          return [...prevItems.filter(item => item.id !== id), { id, text }];
         });
   };
 
   return (
-    <View style={styles.container}>
-      <Header title="Shopping List" />
-      <AddItem addItem={addItem} />
-      <FlatList
-        data={items}
-        renderItem={({item}) => (
-          <ListItem
-            item={item}
-            deleteItem={deleteItem}
-            editItem={editItem}
-            isEditing={editStatus}
-            editItemDetail={editItemDetail}
-            saveEditItem={saveEditItem}
-            handleEditChange={handleEditChange}
-            itemChecked={itemChecked}
-            checkedItems={checkedItems}
-          />
-        )}
-      />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Header title='Shopping List' />
+        <AddItem addItem={addItem} />
+        <FlatList
+          data={items}
+          renderItem={({ item }) => (
+            <ListItem
+              item={item}
+              deleteItem={deleteItem}
+              editItem={editItem}
+              isEditing={editStatus}
+              editItemDetail={editItemDetail}
+              saveEditItem={saveEditItem}
+              handleEditChange={handleEditChange}
+              itemChecked={itemChecked}
+              checkedItems={checkedItems}
+            />
+          )}
+        />
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
   },
 });
 

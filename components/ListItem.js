@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
+  Text,
   TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
@@ -20,48 +20,50 @@ const ListItem = ({
   checkedItems,
 }) => {
   const checked = checkedItems.filter(
-    checkedItem => checkedItem.id === item.id,
+    checkedItem => checkedItem.id === item.id
   );
   return (
     <TouchableOpacity style={styles.listItem}>
       <View style={styles.listItemView}>
         {isEditing && editItemDetail.id === item.id ? (
           <TextInput
-            placeholder="Edit Item..."
+            placeholder='Edit Item...'
             style={styles.editItemInput}
             onChangeText={handleEditChange}
+            placeholderTextColor='darkslategray'
           />
         ) : (
           <Text
             onPress={() => itemChecked(item.id, item.text)}
             style={
               checked.length ? styles.checkedItemText : styles.listItemText
-            }>
+            }
+          >
             {item.text}
           </Text>
         )}
         <View style={styles.iconView}>
           {isEditing && editItemDetail.id === item.id ? (
             <Icon
-              name="save"
+              name='save'
               size={20}
-              color="green"
+              color='green'
               onPress={() => saveEditItem(item.id, item.text)}
             />
           ) : (
             !checked.length && (
               <Icon
-                name="pencil"
+                name='pencil'
                 size={20}
-                color="blue"
+                color='blue'
                 onPress={() => editItem(item.id, item.text)}
               />
             )
           )}
           <Icon
-            name="remove"
+            name='remove'
             size={20}
-            color="firebrick"
+            color='firebrick'
             onPress={() => deleteItem(item.id)}
           />
         </View>
@@ -98,6 +100,7 @@ const styles = StyleSheet.create({
   editItemInput: {
     padding: 0,
     fontSize: 18,
+    color: '#000',
   },
 });
 
